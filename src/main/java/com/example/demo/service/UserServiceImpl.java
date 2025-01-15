@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService{
     public void deleteUser(User user){
         userRepository.delete(user);
     }
+
+    @Transactional
+    public void deleteUserByUsername(String username){
+        userRepository.deleteByUsername(username);
+    }
 }
