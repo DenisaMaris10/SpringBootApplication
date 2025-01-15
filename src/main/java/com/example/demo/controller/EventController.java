@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EventTagDTO;
 import com.example.demo.model.Event;
 import com.example.demo.model.EventCategory;
+import com.example.demo.model.Tag;
 import com.example.demo.service.EventCategoryService;
 import com.example.demo.service.EventService;
 import com.example.demo.service.EventServiceImpl;
+import com.example.demo.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ public class EventController {
 
     private final EventService eventService;
     private final EventCategoryService eventCategoryService;
+    private final TagService tagService;
     @GetMapping
     public String displayAllEvents(@RequestParam(required=false) Integer categoryId, Model model){
 
@@ -95,9 +99,35 @@ public class EventController {
         else {
             model.addAttribute("title", event.getName() + " Details");
             model.addAttribute("event", event);
+            model.addAttribute("tags", event.getTags());
         }
 
         return "events/detail";
     }
+    // responds to /events/add-tag?eventId=13
+    @GetMapping("add-tag")
+    public String displayAddTagForm(@RequestParam Integer eventId, Model model){
+        Event event = eventService.getEventById(eventId);
+        model.addAttribute("title", "Add tag to: " + event.getName());
+        model.addAttribute("tags", tagService.getAllTags());
+        EventTagDTO eventTag = new EventTagDTO();
+        eventTag.setEvent(event);
+        model.addAttribute("eventTag", eventTag); // we use model binding with this DTO
+        return "events/add-tag";
+    }
 
+    @PostMapping("add-tag")
+    public String processAddTagForm(@ModelAttribute @Valid EventTagDTO eventTag, Errors errors, Model model){
+        if (!errors.hasErrors()){
+            Event event = eventTag.getEvent();
+            Tag tag = eventTag.getTag();
+            if (!event.getTags().contains(tag)){
+                event.addTag(tag);
+                eventService.createEvent(event); // hibernate nu creeaza un nou object, it only updates the row
+            }
+            return "redirect:detail?eventId=" + event.getId();
+        }
+
+        return "redirect:add-tag.html";
+    }
 }

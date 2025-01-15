@@ -11,11 +11,11 @@ import java.util.Optional;
 //Data Layer (Repository or DAO=data access object in the name)
 public interface EventRepository extends JpaRepository<Event, Integer> { // Event = type of object which we will store and Integer = type of the primary key
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH,
-            attributePaths = {"eventCategory"})
+            attributePaths = {"eventCategory", "tags"})
     Optional<Event> findById(Integer id);
 
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH,
-            attributePaths = {"eventCategory"})
+            attributePaths = {"eventCategory", "tags"})
     List<Event> findAll();
 
 

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Tag;
 import com.example.demo.repository.TagRepository;
+import com.example.demo.service.TagService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TagController {
 
     @Autowired
-    private TagRepository tagRepository;
+    private TagService tagService;
 
     @GetMapping
     public String displayTags(Model model){
         model.addAttribute("title", "All Tags");
-        model.addAttribute("tags", tagRepository.findAll());
+        model.addAttribute("tags", tagService.getAllTags());
         return "tags/index";
     }
 
@@ -30,7 +31,7 @@ public class TagController {
     public String displayCreateTagForm(Model model){
         model.addAttribute("title", "Create Tag");
         model.addAttribute(new Tag()); // this empty event will have inf about the event so it will be helpful for the create template ( asa am putut inlocui name si type attributes cu th:field...)
-        model.addAttribute("tags", tagRepository.findAll());
+        model.addAttribute("tags", tagService.getAllTags());
         return "tags/create";
     }
 
@@ -40,11 +41,11 @@ public class TagController {
 
         if(errors.hasErrors()){
             model.addAttribute("title", "Create Tag");
-            model.addAttribute("tags", tagRepository.findAll());
+            model.addAttribute("tags", tagService.getAllTags());
             return "tags/create";
         }
 
-        tagRepository.save(newTag);
+        tagService.createTag(newTag);
         return "redirect:"; // redirect response to the root path of the controller
     }
 

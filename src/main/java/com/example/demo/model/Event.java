@@ -60,6 +60,14 @@ public class Event extends AbstractEntity {
         this.eventDetails = eventDetails;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void addTag(Tag tag){
+        tags.add(tag);
+    }
+
     @Override
     public String toString(){
         return name;

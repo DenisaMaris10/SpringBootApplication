@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface TagService {
     List<Tag> getAllTags();
-    Tag getTagById(Integer id);
 
     Tag createTag(Tag tag);
 }
