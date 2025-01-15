@@ -49,6 +49,7 @@
             <td th:text="${user.emailAddress}"></td>
         </tr>
     </table>
+
     <a href="/users/delete" class="btn btn-primary" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Delete User</a>
     <a href="/users/create" class="btn btn-primary" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Create User</a>
 </div>
