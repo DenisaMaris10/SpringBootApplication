@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findLoginUser();
 
     boolean existsByEmailAddress(String emailAddress);
+
+    //@Query("DELETE FROM User u WHERE u.username = ?1")
+    void deleteByUsername(String username);
 }

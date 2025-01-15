@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsEvents :: head"></head>
+
+<body class="container">
+
+<nav th:replace="fragmentsEvents :: header"></nav>
+
+<p th:unless="${tags} and ${tags.size()}">No events!</p>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tr th:each="tag : ${tags}">
+        <td><a th:text="${tag.getDisplayName()}" th:href="'/events/?categoryId=' + ${tag.id}"></a></td>
+    </tr>
+</table>
+
+</body>
+</html>
