@@ -1,4 +1,4 @@
-# EventsManagerSpringBoot
+# EventsManagerSpring
 ## Description
   This project represents a web application which manages events from different categories and can be described through multiple tags. It also provides user authentication functionality. Users, events, event categories and tags are kept in a data base.
 
@@ -14,4 +14,4 @@
 - **Spring Framework**, which provides dependency management and helps building the backend of the web application
 - **Spring Security** handles authentication and authorization, ensuring that only authorized users can access specific functionalities based on their roles
 - **Spring Data JPA**, used for database interaction
-- **HTML** is the markup language which used for the frontend of the web application
+- **HTML** is the markup language used for the frontend of the web application
